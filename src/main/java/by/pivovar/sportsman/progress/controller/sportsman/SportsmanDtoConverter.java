@@ -2,6 +2,8 @@ package by.pivovar.sportsman.progress.controller.sportsman;
 
 import by.pivovar.sportsman.progress.model.sportsman.SportsmanEntity;
 import by.pivovar.sportsman.progress.service.sportsman.SportsmanService;
+import by.pivovar.sportsman.progress.service.sportsman.creation.SportsmanCreationRequest;
+import by.pivovar.sportsman.progress.service.sportsman.update.SportsmanUpdateRequest;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Component;
@@ -20,19 +22,7 @@ public class SportsmanDtoConverter {
         this.modelMapper = modelMapper;
     }
 
-    public SportsmanEntity convertDtoToSportsman(SportsmanDto dto){
-
-        SportsmanEntity sportsmanEntity = new SportsmanEntity();
-        sportsmanEntity.setFirstName(dto.getFirstName());
-        sportsmanEntity.setLastName(dto.getLastName());
-        sportsmanEntity.setBirthday(dto.getBirthday());
-        sportsmanEntity.setEmail(dto.getEmail());
-
-        return sportsmanEntity;
-
-    }
-
-    public SportsmanDto convertSportsmanToDto(SportsmanEntity sportsmanEntity){
+    public SportsmanDto convertModelToDto(SportsmanEntity sportsmanEntity){
 
         SportsmanDto sportsmanDto = new SportsmanDto();
         sportsmanDto.setFirstName(sportsmanEntity.getFirstName());
@@ -54,5 +44,43 @@ public class SportsmanDtoConverter {
 
         return sportsmanListDto;
     }
+
+    SportsmanCreationRequest convertDtoToSportsmanForCreation(SportsmanCreationDto sportsmanCreationDto) {
+        SportsmanCreationRequest sportsmanModel = new SportsmanCreationRequest();
+        sportsmanModel.setId(null);
+        sportsmanModel.setFirstName(sportsmanCreationDto.getFirstName());
+        sportsmanModel.setLastName(sportsmanCreationDto.getLastName());
+        sportsmanModel.setBirthday(sportsmanCreationDto.getBirthday());
+        sportsmanModel.setEmail(sportsmanCreationDto.getEmail());
+
+        return sportsmanModel;
+
+    }
+
+    public SportsmanEntity convertDtoToSportsmanForUpdate(SportsmanDto dto){
+
+        SportsmanEntity sportsmanEntity = new SportsmanEntity();
+        sportsmanEntity.setFirstName(dto.getFirstName());
+        sportsmanEntity.setLastName(dto.getLastName());
+        sportsmanEntity.setBirthday(dto.getBirthday());
+        sportsmanEntity.setEmail(dto.getEmail());
+
+        return sportsmanEntity;
+
+    }
+
+    SportsmanUpdateRequest convertDtoToModelForUpdate(Long id, SportsmanUpdateDto sportsmanUpdateDto){
+        SportsmanUpdateRequest sportsmanModel = new SportsmanUpdateRequest();
+        sportsmanModel.setId(id);
+        sportsmanModel.setFirstName(sportsmanUpdateDto.getFirstName());
+        sportsmanModel.setLastName(sportsmanUpdateDto.getLastName());
+        sportsmanModel.setBirthday(sportsmanUpdateDto.getBirthday());
+        sportsmanModel.setEmail(sportsmanUpdateDto.getEmail());
+
+        return sportsmanModel;
+
+    }
+
+
 
 }
